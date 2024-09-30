@@ -12,6 +12,14 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded;
     private SpriteRenderer spriteRenderer;
 
+    //gun mechanics
+    private bool isHoldingGun = false;
+    public Sprite idleSprite;
+    public Sprite holdingGunSprite;
+    public Sprite shootingSprite;
+
+
+
     private void Awake()
     {
         if(FindObjectsOfType<PlayerController>().Length > 1)
@@ -33,19 +41,61 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        movement.x = Input.GetAxis("Horizontal");
-        
-        if (Input.GetButtonDown("Jump") && isGrounded)
+
+        if (Input.GetKeyDown(E))
         {
-            rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
+            isHoldingGun = !isHoldingGun;
+            UpdateSprite();
         }
 
-        if (movement.x > 0)
+        if (isHoldingGun)
         {
-            spriteRenderer.flipX = false;
-        } else if (movement.x < 0){
-            spriteRenderer.flipX = true;
+            movement.x = 0;
+            if (Input.GetKeyDown(Z))
+            {
+                Shoot();
+            }
+        } else {
+            movement.x = Input.GetAxis("Horizontal");
+
+            if (Input.GetButtonDown("Jump") && isGrounded)
+            {
+                rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
+            }
+
+            if (movement.x > 0)
+            {
+                spriteRenderer.flipX = false;
+            }
+            else if (movement.x < 0)
+            {
+                spriteRenderer.flipX = true;
+            }
         }
+    }
+
+    private void UpdateSprite()
+    {
+        if(isHoldingGun)
+        {
+            spriteRenderer.sprite = holdingGunSprite;
+        } else
+        {
+            spriteRenderer.sprite = idleSprite;
+        }
+    }
+
+    private void Shoot()
+    {
+        spriteRenderer.sprite = shootingSprite;
+        //add bullet code here in the future
+
+        Invoke("ResetToHoldingGunSprite", 0.1f);
+    }
+
+    private void ResetToHoldingGunSprite()
+    {
+        spriteRenderer.sprite = holdingGunSprite;
     }
 
     void FixedUpdate()
