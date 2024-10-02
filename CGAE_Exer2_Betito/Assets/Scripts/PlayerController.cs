@@ -116,6 +116,15 @@ public class PlayerController : MonoBehaviour
         spriteRenderer.sprite = holdingGunSprite;
     }
 
+    public void Die()
+    {
+        // Implement what happens when the player dies, e.g., resetting the game, showing a game over screen, etc.
+        Debug.Log("Player has died!");
+
+        // Optionally, reset the player position or reload the scene
+        // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); // Reloads the current scene
+    }
+
     void FixedUpdate()
     {
 
