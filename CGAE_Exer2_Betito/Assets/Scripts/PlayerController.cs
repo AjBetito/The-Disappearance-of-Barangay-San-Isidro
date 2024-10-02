@@ -11,13 +11,14 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded;
     private SpriteRenderer spriteRenderer;
 
-   
     private bool isHoldingGun = false;
     public Sprite idleSprite;
-    public Sprite holdingGunSprite; 
-    public Sprite shootingSprite; 
-    public Sprite runningSprite; 
+    public Sprite holdingGunSprite;
+    public Sprite shootingSprite;
+    public Sprite runningSprite;
     public Sprite dyingSprite;
+
+    public int damage = 1;
 
     private void Awake()
     {
@@ -39,7 +40,12 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButtonDown("Fire2"))
+        HandleInput();
+    }
+
+    private void HandleInput()
+    {
+        if (Input.GetKeyDown(KeyCode.F)) // Change to appropriate key for toggling gun
         {
             isHoldingGun = !isHoldingGun;
             UpdateSprite();
@@ -47,8 +53,9 @@ public class PlayerController : MonoBehaviour
 
         if (isHoldingGun)
         {
-            movement.x = 0;
+            movement.x = 0; // Stop movement when holding gun
 
+            // Handle horizontal input to flip sprite direction
             if (Input.GetAxis("Horizontal") > 0)
             {
                 spriteRenderer.flipX = false;
@@ -58,7 +65,7 @@ public class PlayerController : MonoBehaviour
                 spriteRenderer.flipX = true;
             }
 
-            if (Input.GetButtonDown("Fire1"))
+            if (Input.GetKeyDown(KeyCode.Z)) // Change to your shooting key
             {
                 Shoot();
             }
@@ -107,10 +114,32 @@ public class PlayerController : MonoBehaviour
     private void Shoot()
     {
         spriteRenderer.sprite = shootingSprite;
-        // Add bullet stuff here soon
+
+        // Define the direction based on the player's facing direction
+        Vector2 shootDirection = spriteRenderer.flipX ? Vector2.left : Vector2.right;
+
+        // Draw the ray for debugging
+        Debug.DrawRay(transform.position, shootDirection * 5f, Color.red, 5f);
+
+        RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, shootDirection, 5f); //fix this in the future
+
+        foreach (RaycastHit2D hit in hits) 
+        {
+            if (hit.collider != null && hit.collider.CompareTag("Enemy"))
+            {
+                EnemyController enemy = hit.collider.GetComponent<EnemyController>();
+                if (enemy != null) 
+                {
+                    enemy.TakeDamage(damage);
+                    Debug.Log("Hit enemy for damage!");
+                }
+            }
+        }
 
         Invoke("ResetToHoldingGunSprite", 0.1f);
     }
+
+
 
     private void ResetToHoldingGunSprite()
     {
@@ -119,25 +148,20 @@ public class PlayerController : MonoBehaviour
 
     public void Die()
     {
-        // Implement what happens when the player dies, e.g., resetting the game, showing a game over screen, etc.
         Debug.Log("Player has died!");
         spriteRenderer.sprite = dyingSprite;
         Destroy(this.gameObject);
-
-        // Optionally, reset the player position or reload the scene
-        // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); // Reloads the current scene
     }
 
     void FixedUpdate()
     {
-
         if (!isHoldingGun)
         {
             rb.velocity = new Vector2(movement.x * moveSpeed, rb.velocity.y);
         }
         else
         {
-            rb.velocity = new Vector2(0, rb.velocity.y); 
+            rb.velocity = new Vector2(0, rb.velocity.y);
         }
     }
 
@@ -145,7 +169,7 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
-            isGrounded = true; 
+            isGrounded = true;
         }
     }
 
@@ -153,7 +177,7 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
-            isGrounded = false; 
+            isGrounded = false;
         }
     }
 }

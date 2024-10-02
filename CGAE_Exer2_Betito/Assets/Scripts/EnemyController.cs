@@ -7,11 +7,13 @@ public class EnemyController : MonoBehaviour
     public float moveSpeed = 2f;
     private Transform player;
     private bool isPlayerAlive = true;
+    public int Health = 15; // enemy health
 
     // Sprites for different enemy states
     public Sprite idleSprite;
     public Sprite attackingSprite;
     public Sprite killedPlayerSprite;
+    public Sprite deadSprite;
 
     private SpriteRenderer spriteRenderer;
 
@@ -64,6 +66,22 @@ public class EnemyController : MonoBehaviour
         {
             KillPlayer();
         }
+    }
+
+    public void TakeDamage(int damage) // Accept damage parameter
+    {
+        Health -= damage; // Deduct damage from health
+        Debug.Log("The Enemy has taken damage!");
+        if (Health <= 0)
+        {
+            Die();
+        }
+    }
+
+    public void Die()
+    {
+        spriteRenderer.sprite = deadSprite;
+        Destroy(gameObject, 2f); // Destroy the enemy after a delay
     }
 
     private void KillPlayer()
