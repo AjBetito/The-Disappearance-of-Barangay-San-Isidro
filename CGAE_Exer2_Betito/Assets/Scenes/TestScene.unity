@@ -434,6 +434,7 @@ MonoBehaviour:
   holdingGunSprite: {fileID: 21300000, guid: ee49a448325783e4888cd0a2b86b8398, type: 3}
   shootingSprite: {fileID: 21300000, guid: 60437c291ba821e4bb59b6e36582812e, type: 3}
   runningSprite: {fileID: 21300000, guid: c1bfe4c3b2ab71d48aee3604a9cece82, type: 3}
+  dyingSprite: {fileID: 21300000, guid: c1bfe4c3b2ab71d48aee3604a9cece82, type: 3}
 --- !u!50 &1242514747
 Rigidbody2D:
   serializedVersion: 4
@@ -533,6 +534,7 @@ GameObject:
   - component: {fileID: 2030065230}
   - component: {fileID: 2030065229}
   - component: {fileID: 2030065228}
+  - component: {fileID: 2030065232}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -679,6 +681,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2030065232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2030065227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83156a6f00f7a9a41a7929ea98b0c74e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 3
+  idleSprite: {fileID: 21300000, guid: 4eacb8a38a03a2b4da58abdda5383683, type: 3}
+  attackingSprite: {fileID: 21300000, guid: 8330f0c43de9a9846872e5edd306317a, type: 3}
+  killedPlayerSprite: {fileID: 21300000, guid: 4eacb8a38a03a2b4da58abdda5383683, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

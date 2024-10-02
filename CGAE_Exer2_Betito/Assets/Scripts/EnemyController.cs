@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    public float moveSpeed = 5f; // Speed at which the enemy moves
-    public Transform player; // Reference to the player
-    public Sprite idleSprite; // Sprite for idle state
-    public Sprite attackingSprite; // Sprite for attacking state
-    public Sprite killedSprite; // Sprite for killed state
+    public float moveSpeed = 2f;
+    private Transform player;
+    private bool isPlayerAlive = true;
+
+    // Sprites for different enemy states
+    public Sprite idleSprite;
+    public Sprite attackingSprite;
+    public Sprite killedPlayerSprite;
 
     private SpriteRenderer spriteRenderer;
 
@@ -16,51 +19,85 @@ public class EnemyController : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
 
-        // Optionally, find the player in the scene if not assigned
+        if (spriteRenderer == null)
+        {
+            Debug.LogError("SpriteRenderer component is missing on the enemy!");
+        }
+
+        // Try to find the player in the scene
+        player = GameObject.FindGameObjectWithTag("Player")?.transform;
         if (player == null)
         {
-            player = GameObject.FindGameObjectWithTag("Player").transform; // Make sure your player has the "Player" tag
+            Debug.LogError("Player not found! Make sure the player object is tagged 'Player'.");
+        }
+        else
+        {
+            Debug.Log("Enemy script started and player found.");
+        }
+
+        // Set the initial idle sprite
+        if (idleSprite != null)
+        {
+            spriteRenderer.sprite = idleSprite;
         }
     }
 
     private void Update()
     {
-        MoveTowardsPlayer();
+        if (isPlayerAlive && player != null)
+        {
+            MoveTowardsPlayer();
+        }
     }
 
     private void MoveTowardsPlayer()
     {
-        if (player != null)
+        // Move the enemy towards the player
+        Vector2 direction = (player.position - transform.position).normalized;
+        transform.position = Vector2.MoveTowards(transform.position, player.position, moveSpeed * Time.deltaTime);
+
+        // Flip the sprite based on direction
+        spriteRenderer.flipX = direction.x < 0;
+
+        // Check for collision with the player
+        if (Vector2.Distance(transform.position, player.position) < 0.1f)
         {
-            // Move towards the player's position
-            Vector2 direction = (player.position - transform.position).normalized;
-            transform.position = Vector2.MoveTowards(transform.position, player.position, moveSpeed * Time.deltaTime);
-
-            // Optionally, flip the sprite based on direction
-            spriteRenderer.flipX = direction.x < 0;
-
-            // Check for collision
-            if (Vector2.Distance(transform.position, player.position) < 0.1f)
-            {
-                // Call the method to handle player death
-                KillPlayer();
-            }
+            KillPlayer();
         }
     }
 
     private void KillPlayer()
     {
-        // Change enemy sprite to indicate attack
-        spriteRenderer.sprite = attackingSprite;
-
-        // Optionally, call a method in the PlayerController to handle player death
         PlayerController playerController = player.GetComponent<PlayerController>();
-        if (playerController != null)
+
+        if (playerController != null && isPlayerAlive)
         {
-            playerController.Die(); // You need to implement the Die method in your PlayerController
+            playerController.Die(); // Call player's Die method to handle death logic
+            ChangeToKilledPlayerState(); // Change the enemy sprite to indicate that it killed the player
+        }
+    }
+
+    private void ChangeToKilledPlayerState()
+    {
+        // Change the enemy's sprite to the killedPlayerSprite after killing the player
+        if (killedPlayerSprite != null)
+        {
+            spriteRenderer.sprite = killedPlayerSprite;
+        }
+        else
+        {
+            Debug.LogError("Killed player sprite is not assigned!");
         }
 
-        // Destroy the enemy after a delay, or you could implement a pooling system instead
-        Destroy(gameObject, 1f); // Delay before destroying the enemy
+        // Optionally, stop the enemy from moving after the player is killed
+        isPlayerAlive = false;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player") && isPlayerAlive)
+        {
+            KillPlayer();
+        }
     }
 }

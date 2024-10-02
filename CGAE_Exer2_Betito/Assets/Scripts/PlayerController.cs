@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     public Sprite holdingGunSprite; 
     public Sprite shootingSprite; 
     public Sprite runningSprite; 
+    public Sprite dyingSprite;
 
     private void Awake()
     {
@@ -120,6 +121,8 @@ public class PlayerController : MonoBehaviour
     {
         // Implement what happens when the player dies, e.g., resetting the game, showing a game over screen, etc.
         Debug.Log("Player has died!");
+        spriteRenderer.sprite = dyingSprite;
+        Destroy(this.gameObject);
 
         // Optionally, reset the player position or reload the scene
         // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); // Reloads the current scene
