@@ -7,12 +7,12 @@
             "actions": [
                 {
                     "name": "Movement",
-                    "type": "Value",
-                    "id": "bff41132-6e88-4d8e-a81e-47b53f757fa5",
-                    "expectedControlType": "Vector2",
+                    "type": "Button",
+                    "id": "eb75c3d6-755c-4bda-ad59-9bf76a5f8972",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": true
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Jump",
@@ -33,7 +33,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Toggle Gun",
+                    "name": "ToggleGun",
                     "type": "Button",
                     "id": "17c05df7-4372-4a14-b281-d8ebcc90c39c",
                     "expectedControlType": "Button",
@@ -72,14 +72,14 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Toggle Gun",
+                    "action": "ToggleGun",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "9d2ded8d-0b63-469a-afeb-7488a20a8c84",
-                    "path": "",
+                    "id": "22f1f584-0e3a-4f5d-89cb-dc389619f2f1",
+                    "path": "<Keyboard>/leftArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -88,59 +88,15 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "2D Vector",
-                    "id": "d25452e8-ebd7-4b48-97fa-397efbc2b8f1",
-                    "path": "2DVector",
+                    "name": "",
+                    "id": "a63dbaaf-4e0d-4b9c-bf62-56ddd988cd4c",
+                    "path": "<Keyboard>/rightArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Movement",
-                    "isComposite": true,
+                    "isComposite": false,
                     "isPartOfComposite": false
-                },
-                {
-                    "name": "up",
-                    "id": "118e1211-f418-40ce-9d2f-2a2dbfb2a757",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Movement",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "down",
-                    "id": "b09693b8-bda8-455b-a1e5-c04d3a6718c3",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Movement",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "left",
-                    "id": "2e553467-ac1e-47cb-92ac-7ca12345a12b",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Movement",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "right",
-                    "id": "7d131268-08fc-46d5-83cf-d0f5458298c5",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Movement",
-                    "isComposite": false,
-                    "isPartOfComposite": true
                 }
             ]
         }

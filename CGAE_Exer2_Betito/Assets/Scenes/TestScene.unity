@@ -353,6 +353,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   jumpForce: 5
+  idleSprite: {fileID: 21300000, guid: 971f4df41aac75848be57bbf8d5a84ad, type: 3}
+  holdingGunSprite: {fileID: 21300000, guid: ee49a448325783e4888cd0a2b86b8398, type: 3}
+  shootingSprite: {fileID: 21300000, guid: 60437c291ba821e4bb59b6e36582812e, type: 3}
 --- !u!61 &670708749
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
@@ -12,74 +12,74 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded;
     private SpriteRenderer spriteRenderer;
 
-    //gun mechanics
-    private bool isHoldingGun = false;
+    // Gun mechanics variables
+    private bool isHoldingGun = false;  // This tracks whether the player is holding a gun
     public Sprite idleSprite;
     public Sprite holdingGunSprite;
     public Sprite shootingSprite;
 
-
+    // Input actions reference
+    private PlayerControls inputActions;
 
     private void Awake()
     {
-        if(FindObjectsOfType<PlayerController>().Length > 1)
-        {
-            Destroy(gameObject);
-        }
-
-        else
-        {
-            DontDestroyOnLoad(gameObject);
-        }
-    }
-
-    void Start()
-    {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+        inputActions = new PlayerControls(); // Initialize the input actions
     }
 
-    void Update()
+    private void OnEnable()
     {
+        inputActions.Enable();
 
-        if (Input.GetKeyDown(E))
+        // Subscribe to action events
+        inputActions.Player.Movement.performed += OnMove;
+        inputActions.Player.Movement.canceled += OnMove;
+        inputActions.Player.Jump.performed += OnJump;
+        inputActions.Player.Shoot.performed += OnShoot;
+        inputActions.Player.ToggleGun.performed += OnToggleGun;
+    }
+
+    private void OnDisable()
+    {
+        inputActions.Disable();
+    }
+
+    private void OnMove(InputAction.CallbackContext context)
+    {
+        InputAction.Movement = context.ReadValue<float>();  // Read the float value directly for horizontal movement
+    }
+
+    private void OnJump(InputAction.CallbackContext context)
+    {
+        if (isGrounded)
         {
-            isHoldingGun = !isHoldingGun;
-            UpdateSprite();
+            rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
         }
+    }
 
+    private void OnShoot(InputAction.CallbackContext context)
+    {
         if (isHoldingGun)
         {
-            movement.x = 0;
-            if (Input.GetKeyDown(Z))
-            {
-                Shoot();
-            }
-        } else {
-            movement.x = Input.GetAxis("Horizontal");
-
-            if (Input.GetButtonDown("Jump") && isGrounded)
-            {
-                rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
-            }
-
-            if (movement.x > 0)
-            {
-                spriteRenderer.flipX = false;
-            }
-            else if (movement.x < 0)
-            {
-                spriteRenderer.flipX = true;
-            }
+            Shoot();
         }
+    }
+
+    private void OnToggleGun(InputAction.CallbackContext context)
+    {
+        isHoldingGun = !isHoldingGun;
+        UpdateSprite();
     }
 
     private void UpdateSprite()
     {
-        if(isHoldingGun)
+        if (isHoldingGun)
         {
             spriteRenderer.sprite = holdingGunSprite;
-        } else
+        }
+        else
         {
             spriteRenderer.sprite = idleSprite;
         }
@@ -88,8 +88,6 @@ public class PlayerController : MonoBehaviour
     private void Shoot()
     {
         spriteRenderer.sprite = shootingSprite;
-        //add bullet code here in the future
-
         Invoke("ResetToHoldingGunSprite", 0.1f);
     }
 
@@ -100,14 +98,14 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        rb.velocity = new Vector2(movement.x * moveSpeed, rb.velocity.y);
+        rb.velocity = new Vector2(movement.x * moveSpeed, rb.velocity.y);  // Apply movement
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
-            isGrounded = true; // Check if on the ground
+            isGrounded = true;  // Player is grounded
         }
     }
 
@@ -115,7 +113,7 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
-            isGrounded = false; // Not on the ground anymore
+            isGrounded = false;  // Player is no longer grounded
         }
     }
 }
