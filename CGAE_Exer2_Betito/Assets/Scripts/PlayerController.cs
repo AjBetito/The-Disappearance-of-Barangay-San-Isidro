@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded;
     private SpriteRenderer spriteRenderer;
 
+<<<<<<< HEAD
     // Gun mechanics variables
     private bool isHoldingGun = false;  // This tracks whether the player is holding a gun
     public Sprite idleSprite;
@@ -21,6 +22,8 @@ public class PlayerController : MonoBehaviour
     // Input actions reference
     private PlayerControls inputActions;
 
+=======
+>>>>>>> parent of e8884d6 (Started Adding Shooting Mechanics and Input Changes)
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -31,6 +34,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnEnable()
     {
+<<<<<<< HEAD
         inputActions.Enable();
 
         // Subscribe to action events
@@ -54,11 +58,17 @@ public class PlayerController : MonoBehaviour
     private void OnJump(InputAction.CallbackContext context)
     {
         if (isGrounded)
+=======
+        movement.x = Input.GetAxis("Horizontal");
+        
+        if (Input.GetButtonDown("Jump") && isGrounded)
+>>>>>>> parent of e8884d6 (Started Adding Shooting Mechanics and Input Changes)
         {
             rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
         }
     }
 
+<<<<<<< HEAD
     private void OnShoot(InputAction.CallbackContext context)
     {
         if (isHoldingGun)
@@ -96,6 +106,16 @@ public class PlayerController : MonoBehaviour
         spriteRenderer.sprite = holdingGunSprite;
     }
 
+=======
+        if (movement.x > 0)
+        {
+            spriteRenderer.flipX = false;
+        } else if (movement.x < 0){
+            spriteRenderer.flipX = true;
+        }
+    }
+
+>>>>>>> parent of e8884d6 (Started Adding Shooting Mechanics and Input Changes)
     void FixedUpdate()
     {
         rb.velocity = new Vector2(movement.x * moveSpeed, rb.velocity.y);  // Apply movement
