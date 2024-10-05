@@ -155,6 +155,11 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+
+        if(DialogueManager.GetInstance().dialogueisPlaying){
+            return;
+        }
+
         if (!isHoldingGun)
         {
             rb.velocity = new Vector2(movement.x * moveSpeed, rb.velocity.y);
