@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    public float moveSpeed = 2f;
+    public float moveSpeed = 0.5f;
     private Transform player;
     private bool isPlayerAlive = true;
     public int Health = 15; // enemy health
+
+    // Enemy state flags
+    private bool isDead = false; // New flag to check if the enemy is dead
 
     // Sprites for different enemy states
     public Sprite idleSprite;
@@ -46,7 +49,7 @@ public class EnemyController : MonoBehaviour
 
     private void Update()
     {
-        if (isPlayerAlive && player != null)
+        if (!isDead && isPlayerAlive && player != null)
         {
             MoveTowardsPlayer();
         }
@@ -80,6 +83,7 @@ public class EnemyController : MonoBehaviour
 
     public void Die()
     {
+        isDead = true; // Set the enemy to dead state
         spriteRenderer.sprite = deadSprite;
         Destroy(gameObject, 2f); // Destroy the enemy after a delay
     }
