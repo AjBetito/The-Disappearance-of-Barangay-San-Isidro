@@ -10,11 +10,16 @@ public class PlayerController : MonoBehaviour
     private Vector2 movement;
     private bool isGrounded;
     private SpriteRenderer spriteRenderer;
+    private Animator animator; // Reference to the Animator
 
     private bool isHoldingGun = false;
+    private bool isTogglingGun = false; // To track if the player is currently toggling the gun
+    private bool isShooting = false; // To track if the player is currently shooting
+
     public Sprite idleSprite;
     public Sprite holdingGunSprite;
     public Sprite shootingSprite;
+    public Sprite togglingGun;
     public Sprite runningSprite;
     public Sprite dyingSprite;
 
@@ -36,6 +41,7 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>(); // Initialize the Animator
     }
 
     void Update()
@@ -47,8 +53,10 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F)) // Change to appropriate key for toggling gun
         {
-            isHoldingGun = !isHoldingGun;
-            UpdateSprite();
+            if (!isTogglingGun) // Prevent toggling while already in the animation
+            {
+                StartCoroutine(ToggleGun());
+            }
         }
 
         if (isHoldingGun)
@@ -67,7 +75,7 @@ public class PlayerController : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Z)) // Change to your shooting key
             {
-                Shoot();
+                StartCoroutine(Shoot());
             }
         }
         else
@@ -79,6 +87,7 @@ public class PlayerController : MonoBehaviour
                 rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
             }
 
+            // Handle horizontal input to flip sprite direction
             if (movement.x > 0)
             {
                 spriteRenderer.flipX = false;
@@ -94,6 +103,11 @@ public class PlayerController : MonoBehaviour
 
     private void UpdateSprite()
     {
+        // Update animator parameters based on the current state
+        animator.SetBool("isHoldingGun", isHoldingGun);
+        animator.SetFloat("Speed", Mathf.Abs(movement.x));
+
+        // Update the sprite renderer as needed
         if (isHoldingGun)
         {
             spriteRenderer.sprite = holdingGunSprite;
@@ -111,9 +125,30 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void Shoot()
+    private IEnumerator ToggleGun()
     {
+        isTogglingGun = true; // Prevent other actions during toggling
+        animator.SetBool("isHoldingGun", false); // Trigger the toggling animation
+        spriteRenderer.sprite = togglingGun; // Optionally change to toggling gun sprite
+
+        // Wait for the toggling animation to finish
+        yield return new WaitForSeconds(0.5f); // Adjust duration as needed based on the animation length
+
+        // Toggle the gun state
+        isHoldingGun = !isHoldingGun;
+        UpdateSprite(); // Update to the correct sprite (holding or idle)
+
+        isTogglingGun = false; // Allow actions again after toggling
+    }
+
+    private IEnumerator Shoot()
+    {
+        isShooting = true; // Prevent other actions during shooting
+        animator.SetBool("isShooting", true); // Trigger shooting animation
         spriteRenderer.sprite = shootingSprite;
+
+        // Wait for the shooting animation to finish
+        yield return new WaitForSeconds(0.5f); // Adjust shooting duration as needed
 
         // Define the direction based on the player's facing direction
         Vector2 shootDirection = spriteRenderer.flipX ? Vector2.left : Vector2.right;
@@ -121,14 +156,14 @@ public class PlayerController : MonoBehaviour
         // Draw the ray for debugging
         Debug.DrawRay(transform.position, shootDirection * 5f, Color.red, 5f);
 
-        RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, shootDirection, 5f); //fix this in the future
+        RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, shootDirection, 5f);
 
-        foreach (RaycastHit2D hit in hits) 
+        foreach (RaycastHit2D hit in hits)
         {
             if (hit.collider != null && hit.collider.CompareTag("Enemy"))
             {
                 EnemyController enemy = hit.collider.GetComponent<EnemyController>();
-                if (enemy != null) 
+                if (enemy != null)
                 {
                     enemy.TakeDamage(damage);
                     Debug.Log("Hit enemy for damage!");
@@ -136,14 +171,11 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        Invoke("ResetToHoldingGunSprite", 0.1f);
-    }
-
-
-
-    private void ResetToHoldingGunSprite()
-    {
+        // Reset to holding gun sprite after shooting
         spriteRenderer.sprite = holdingGunSprite;
+        animator.SetBool("isShooting", false); // Reset shooting state
+
+        isShooting = false; // Allow actions again after shooting
     }
 
     public void Die()
@@ -155,8 +187,8 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-
-        if(DialogueManager.GetInstance().dialogueisPlaying){
+        if (DialogueManager.GetInstance().dialogueisPlaying)
+        {
             return;
         }
 

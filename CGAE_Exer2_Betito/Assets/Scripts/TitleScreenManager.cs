@@ -11,7 +11,7 @@ public class TitleScreenManager : MonoBehaviour
 
 
     public void StartGame(){
-        SceneManager.LoadScene("Opening Cutscene");
+        SceneManager.LoadScene("Entrance");
     }
 
     public void QuitGame(){

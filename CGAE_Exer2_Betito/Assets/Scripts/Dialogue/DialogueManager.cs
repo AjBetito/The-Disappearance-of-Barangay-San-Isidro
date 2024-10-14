@@ -16,33 +16,41 @@ public class DialogueManager : MonoBehaviour
 
     public bool dialogueisPlaying { get; private set; }
 
-    private void Awake(){
-        if(instance != null){
-            Debug.LogWarning("Found more than one Dialogue Manage in the scene.");
+    private void Awake()
+    {
+        if (instance != null)
+        {
+            Debug.LogWarning("Found more than one Dialogue Manager in the scene.");
         }
         instance = this;
     }
 
-    public static DialogueManager GetInstance(){
+    public static DialogueManager GetInstance()
+    {
         return instance;
     }
 
-    private void Start(){
+    private void Start()
+    {
         dialogueisPlaying = false;
         dialoguePanel.SetActive(false);
     }
 
-    private void Update(){
-        if(!dialogueisPlaying){
+    private void Update()
+    {
+        if (!dialogueisPlaying)
+        {
             return;
         }
 
-        if(Input.GetKeyDown(KeyCode.E)){
+        if (Input.GetKeyDown(KeyCode.E))
+        {
             ContinueStory();
         }
     }
 
-    public void EnterDialogueMode(TextAsset inkJSON){
+    public void EnterDialogueMode(TextAsset inkJSON)
+    {
         currentStory = new Story(inkJSON.text);
         dialogueisPlaying = true;
         dialoguePanel.SetActive(true);
@@ -50,17 +58,34 @@ public class DialogueManager : MonoBehaviour
         ContinueStory();
     }
 
-    private void ExitDialogueMode(){
+    private void ExitDialogueMode()
+    {
         dialogueisPlaying = false;
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
     }
 
-    private void ContinueStory(){
-        if(currentStory.canContinue) {
-            dialogueText.text = currentStory.Continue();
-        } else {
+    private void ContinueStory()
+    {
+        if (currentStory.canContinue)
+        {
+            // Start the typewriter effect
+            StartCoroutine(TypewriterEffect(currentStory.Continue()));
+        }
+        else
+        {
             ExitDialogueMode();
+        }
+    }
+
+    private IEnumerator TypewriterEffect(string line)
+    {
+        dialogueText.text = ""; // Clear the text at the beginning
+
+        foreach (char letter in line.ToCharArray())
+        {
+            dialogueText.text += letter; // Add one letter at a time
+            yield return new WaitForSeconds(0.05f); // Wait before showing the next letter
         }
     }
 }
