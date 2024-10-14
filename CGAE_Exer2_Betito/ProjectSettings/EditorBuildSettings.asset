@@ -35,4 +35,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Chapel - 2.unity
     guid: ac70357557fb4074db24e4c7cc8668c3
+  - enabled: 1
+    path: Assets/Scenes/Bridge 2.unity
+    guid: 66fc4bae9a6cc7c4da4d88c39ac8e258
   m_configObjects: {}

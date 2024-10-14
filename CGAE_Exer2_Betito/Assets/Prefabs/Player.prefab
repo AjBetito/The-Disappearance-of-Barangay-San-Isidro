@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5040721713178193651}
   - component: {fileID: 5497986551935976001}
   - component: {fileID: 6087019845449399814}
+  - component: {fileID: -5976308363843261790}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -29,9 +30,9 @@ Transform:
   m_GameObject: {fileID: 7445186641080984356}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5, y: 0, z: 0}
+  m_LocalPosition: {x: -7.2, y: -2.33, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -76,8 +77,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   jumpForce: 5
-  idleSprite: {fileID: 21300000, guid: 971f4df41aac75848be57bbf8d5a84ad, type: 3}
-  holdingGunSprite: {fileID: 21300000, guid: ee49a448325783e4888cd0a2b86b8398, type: 3}
+  idleSprite: {fileID: 21300000, guid: 35bd24e2ebec66a48a88de392791bc0a, type: 3}
+  holdingGunSprite: {fileID: 21300000, guid: dafee20e073f9364dbd2fd8fd9606ef8, type: 3}
   shootingSprite: {fileID: 21300000, guid: 60437c291ba821e4bb59b6e36582812e, type: 3}
   runningSprite: {fileID: 21300000, guid: c1bfe4c3b2ab71d48aee3604a9cece82, type: 3}
   dyingSprite: {fileID: 21300000, guid: c1bfe4c3b2ab71d48aee3604a9cece82, type: 3}
@@ -123,7 +124,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 971f4df41aac75848be57bbf8d5a84ad, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 35bd24e2ebec66a48a88de392791bc0a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -166,16 +167,30 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.23, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.9, y: 2.9}
+    oldSize: {x: 1.28, y: 1.28}
     newSize: {x: 2.9, y: 2.9}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.9, y: 2.9}
+  m_Size: {x: 0.56, y: 1.2}
   m_EdgeRadius: 0
+--- !u!114 &-5976308363843261790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7445186641080984356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c29cff538c195c249b69c6f2236de67b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Library: []
+  m_SpriteLibraryAsset: {fileID: 0}
