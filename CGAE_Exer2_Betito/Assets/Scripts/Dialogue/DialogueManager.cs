@@ -85,7 +85,7 @@ public class DialogueManager : MonoBehaviour
         foreach (char letter in line.ToCharArray())
         {
             dialogueText.text += letter; // Add one letter at a time
-            yield return new WaitForSeconds(0.05f); // Wait before showing the next letter
+            yield return new WaitForSeconds(0.01f); // Wait before showing the next letter
         }
     }
 }

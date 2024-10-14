@@ -186,6 +186,14 @@ PrefabInstance:
       propertyPath: inkJSON
       value: 
       objectReference: {fileID: 4900000, guid: f08ad61aef1492641ac24edf80987a14, type: 3}
+    - target: {fileID: 7983131574877052518, guid: 34790a44df6ebe144adc650e5abee3cb, type: 3}
+      propertyPath: m_Size.x
+      value: 2.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 7983131574877052518, guid: 34790a44df6ebe144adc650e5abee3cb, type: 3}
+      propertyPath: m_Size.y
+      value: 8.39
+      objectReference: {fileID: 0}
     - target: {fileID: 8508512229162633209, guid: 34790a44df6ebe144adc650e5abee3cb, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -743,7 +751,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3121133034636385784, guid: a6490b71f5e0d1146a91b6d1863c8d0d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.2
+      value: -3.21
       objectReference: {fileID: 0}
     - target: {fileID: 3121133034636385784, guid: a6490b71f5e0d1146a91b6d1863c8d0d, type: 3}
       propertyPath: m_LocalRotation.w

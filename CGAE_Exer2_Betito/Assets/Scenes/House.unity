@@ -305,6 +305,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7552817638719454961, guid: 34790a44df6ebe144adc650e5abee3cb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 7552817638719454961, guid: 34790a44df6ebe144adc650e5abee3cb, type: 3}
       propertyPath: m_LocalPosition.y
       value: 2.55
       objectReference: {fileID: 0}
@@ -312,6 +316,18 @@ PrefabInstance:
       propertyPath: inkJSON
       value: 
       objectReference: {fileID: 4900000, guid: 22f5c40f3c94f954283b586b826a1476, type: 3}
+    - target: {fileID: 7983131574877052518, guid: 34790a44df6ebe144adc650e5abee3cb, type: 3}
+      propertyPath: m_Size.y
+      value: 4.32
+      objectReference: {fileID: 0}
+    - target: {fileID: 7983131574877052518, guid: 34790a44df6ebe144adc650e5abee3cb, type: 3}
+      propertyPath: m_Offset.x
+      value: -2.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7983131574877052518, guid: 34790a44df6ebe144adc650e5abee3cb, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.45
+      objectReference: {fileID: 0}
     - target: {fileID: 8508512229162633209, guid: 34790a44df6ebe144adc650e5abee3cb, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -392,7 +408,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1812780294536580013, guid: 8980c25c1b484884f918fdf5bfcab9cf, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.67
+      value: 0.65
       objectReference: {fileID: 0}
     - target: {fileID: 1812780294536580013, guid: 8980c25c1b484884f918fdf5bfcab9cf, type: 3}
       propertyPath: m_LocalPosition.z
