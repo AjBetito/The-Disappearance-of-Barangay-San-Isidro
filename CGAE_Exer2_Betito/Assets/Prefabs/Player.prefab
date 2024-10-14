@@ -77,8 +77,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   jumpForce: 5
-  idleSprite: {fileID: 21300000, guid: 35bd24e2ebec66a48a88de392791bc0a, type: 3}
-  holdingGunSprite: {fileID: 21300000, guid: dafee20e073f9364dbd2fd8fd9606ef8, type: 3}
+  idleSprite: {fileID: 21300000, guid: c1db21547ef2d004aa8bb97674a27d6f, type: 3}
+  holdingGunSprite: {fileID: 21300000, guid: fdb75b1aa6735db48b5c93a8fa7ead37, type: 3}
   shootingSprite: {fileID: 21300000, guid: 60437c291ba821e4bb59b6e36582812e, type: 3}
   runningSprite: {fileID: 21300000, guid: c1bfe4c3b2ab71d48aee3604a9cece82, type: 3}
   dyingSprite: {fileID: 21300000, guid: c1bfe4c3b2ab71d48aee3604a9cece82, type: 3}
