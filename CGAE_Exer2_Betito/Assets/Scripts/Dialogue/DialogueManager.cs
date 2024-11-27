@@ -4,6 +4,14 @@ using UnityEngine;
 using TMPro;
 using Ink.Runtime;
 
+
+//NOTES
+//This code requires asstes in game to function properly.
+//This code also requires Ink to function and the Ink add-on in Unity.
+//For context, it helps with dialogue.
+//To download Ink, go to https://www.inklestudios.com/ink/
+
+
 public class DialogueManager : MonoBehaviour
 {
     [Header("Dialogue UI")]

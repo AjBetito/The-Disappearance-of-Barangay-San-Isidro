@@ -2,6 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//NOTES
+//This code requires asstes in game to function properly.
+//This code also requires Ink to function and the Ink add-on in Unity.
+//For context, it helps with dialogue.
+//To download Ink, go to https://www.inklestudios.com/ink/
+
 public class DialogueTrigger : MonoBehaviour
 {
     [Header("Visual Cue")]
